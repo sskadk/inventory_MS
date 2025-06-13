@@ -12,6 +12,12 @@ class Product(models.Model):
     description = models.TextField()
     stock = models.IntegerField()
 
+class Customer(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    number = models.CharField(max_length=20)
+    address = models.CharField(max_length=200)
+
 class Supplier(models.Model):
     name = models.CharField(max_length=300)
     contact = models.IntegerField(max_length=10)
@@ -28,4 +34,4 @@ class Sale(models.Model):
     quantity = models.IntegerField()
     price  = models.IntegerField()
     product = models.ForeignKey(Product)
-    supplier = models.ForeignKey(Supplier)
+    customer = models.ForeignKey(Supplier)
