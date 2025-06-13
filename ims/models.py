@@ -1,3 +1,19 @@
 from django.db import models
 
-# Create your models here.
+class User(models.Model):
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=300)
+    username = models.CharField(max_length=300)
+    phone_no = models.IntegerField(null=True)
+    address = models.CharField(max_length=300,null=True)
+
+class Product(models.Model):
+    name = models.CharField(max_length=300)
+    description = models.TextField()
+    stock = models.IntegerField()
+
+class Supplier(models.Model):
+    name = models.CharField(max_length=300)
+    contact = models.IntegerField(max_length=10)
+    address = models.CharField(max_length=300)
+    email = models.EmailField()
