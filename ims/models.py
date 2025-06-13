@@ -34,4 +34,4 @@ class Sale(models.Model):
     quantity = models.IntegerField()
     price  = models.IntegerField()
     product = models.ForeignKey(Product)
-    customer = models.ForeignKey(Supplier)
+    customer = models.ForeignKey(Customer)
