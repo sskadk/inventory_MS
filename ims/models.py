@@ -1,37 +1,45 @@
 from django.db import models
 
-class User(models.Model):
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=300)
-    username = models.CharField(max_length=300)
-    phone_no = models.IntegerField(max_length=10, null=True)
-    address = models.CharField(max_length=300,null=True)
+
+class ProductType(models.Model):
+    name = models.CharField(max_length=300)
 
 class Product(models.Model):
     name = models.CharField(max_length=300)
     description = models.TextField()
+    price = models.FloatField()
     stock = models.IntegerField()
+    type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
+    department = models.ManyToManyField('Department')
+    
+class Purchase(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.FloatField()
+    vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE)
+
+class Sell(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.FloatField()
+    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
 
 class Customer(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    number = models.CharField(max_length=20)
-    address = models.CharField(max_length=200)
-
-class Supplier(models.Model):
     name = models.CharField(max_length=300)
-    contact = models.IntegerField(max_length=10)
-    address = models.CharField(max_length=300)
     email = models.EmailField()
+    number = models.CharField(max_length=15)
+    address = models.CharField(max_length=300)
 
-class Purchase(models.Model):
-    quantity = models.IntegerField()
-    price  = models.IntegerField()
-    product = models.ForeignKey(Product)
-    supplier = models.ForeignKey(Supplier)
+class Vendor(models.Model):
+    name = models.CharField(max_length=300)
+    company_name = models.CharField(max_length=300)
+    email = models.EmailField()
+    number = models.CharField(max_length=15)
+    comapny_address = models.CharField(max_length=300)
 
-class Sale(models.Model):
-    quantity = models.IntegerField()
-    price  = models.IntegerField()
-    product = models.ForeignKey(Product)
-    customer = models.ForeignKey(Customer)
+class Department(models.Model):
+    name = models.CharField(max_length=300)
+    description = models.TextField()
+    floor = models.IntegerField()
+
+ 
